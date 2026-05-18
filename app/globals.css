@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #004f90;
+  --color-primary-light: #1a73c5;
+  --color-primary-dark: #003d70;
+  --color-accent: #00c9ff;
+  --color-bg-dark: #0d1b2b;
+  --color-bg-surface: #1c2a3a;
+  --color-bg-light: #f5f8fb;
+  --color-bg-light-card: #e8f4fd;
+  --color-text-on-dark: #b3d0ec;
+  --color-text-muted: #80b1df;
+  --color-hero-base: #0a0f1e;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-bg-dark text-text-on-dark antialiased;
+  }
+}
+
+@layer utilities {
+  .glass-nav {
+    @apply border-b border-white/10 backdrop-blur-xl;
+    background-color: color-mix(in srgb, var(--color-bg-dark) 70%, transparent);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] bg-clip-text text-transparent;
+  }
+
+  .btn-gradient {
+    background: linear-gradient(135deg, #004f90, #00c9ff);
+  }
+
+  .section-dark {
+    background: linear-gradient(135deg, #0d1b2b, #004f90);
+  }
+}
