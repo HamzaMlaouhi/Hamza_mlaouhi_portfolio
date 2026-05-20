@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
 import { usePrefersReducedMotion } from "@/lib/hooks";
@@ -16,9 +16,13 @@ export function PhoneMockup() {
     offset: ["start end", "end start"],
   });
 
-  const rotateY = useTransform(scrollYProgress, [0, 1], [-8, 12]);
-  const rotateX = useTransform(scrollYProgress, [0, 1], [4, -6]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const rawRotateY = useTransform(scrollYProgress, [0, 1], [-8, 12]);
+  const rawRotateX = useTransform(scrollYProgress, [0, 1], [4, -6]);
+  const rawY = useTransform(scrollYProgress, [0, 1], [0, 40]);
+
+  const rotateY = useSpring(rawRotateY, { stiffness: 110, damping: 24, mass: 0.4 });
+  const rotateX = useSpring(rawRotateX, { stiffness: 110, damping: 24, mass: 0.4 });
+  const y = useSpring(rawY, { stiffness: 110, damping: 24, mass: 0.4 });
 
   return (
     <div ref={ref} className="relative flex justify-center lg:justify-end">
@@ -36,29 +40,31 @@ export function PhoneMockup() {
             ? undefined
             : { rotateY, rotateX, y, perspective: 1200 }
         }
-        animate={
-          reducedMotion
-            ? undefined
-            : {
-                y: [0, -14, 0],
-                rotateZ: [-1.5, 1.5, -1.5],
-              }
-        }
-        transition={
-          reducedMotion
-            ? undefined
-            : {
-                y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                rotateZ: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-              }
-        }
         className="relative z-10"
       >
-        {/* Device frame */}
         <motion.div
-          className="relative w-[260px] rounded-[2.75rem] border-[3px] border-[#2a3f55] bg-[#0a1220] p-2 shadow-phone-glow sm:w-[280px]"
-          style={{ transformStyle: "preserve-3d" }}
+          animate={
+            reducedMotion
+              ? undefined
+              : {
+                  y: [0, -14, 0],
+                  rotateZ: [-1.5, 1.5, -1.5],
+                }
+          }
+          transition={
+            reducedMotion
+              ? undefined
+              : {
+                  y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                  rotateZ: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+                }
+          }
         >
+          {/* Device frame */}
+          <motion.div
+            className="relative w-[260px] rounded-[2.75rem] border-[3px] border-[#2a3f55] bg-[#0a1220] p-2 shadow-phone-glow sm:w-[280px]"
+            style={{ transformStyle: "preserve-3d" }}
+          >
           {/* Side buttons */}
           <motion.div
             className="absolute -left-[2px] top-24 h-10 w-[3px] rounded-l bg-[#3d5268]"
@@ -131,6 +137,7 @@ export function PhoneMockup() {
               className="absolute bottom-2 left-1/2 h-1 w-24 -translate-x-1/2 rounded-full bg-white/30"
               aria-hidden
             />
+          </motion.div>
           </motion.div>
         </motion.div>
 
