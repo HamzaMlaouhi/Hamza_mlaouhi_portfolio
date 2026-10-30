@@ -36,11 +36,13 @@ export function Hero() {
       className="relative min-h-screen overflow-hidden section-dark"
       aria-label="Introduction"
     >
-      {/* Background grid */}
+      {/* 3D grid floor */}
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(0,201,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,201,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 overflow-hidden [perspective:500px]"
         aria-hidden
-      />
+      >
+        <div className="absolute -inset-x-1/2 bottom-0 h-[200%] origin-bottom animate-grid-flow bg-[linear-gradient(rgba(0,201,255,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(0,201,255,0.22)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:linear-gradient(to_top,black,transparent_70%)] [transform:rotateX(72deg)]" />
+      </div>
 
       {/* Ambient orbs */}
       <div

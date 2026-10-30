@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #004f90;
-  --color-primary-light: #1a73c5;
-  --color-primary-dark: #003d70;
-  --color-accent: #00c9ff;
+  /* RGB channels so Tailwind opacity modifiers (bg-accent/10) work */
+  --color-primary: 0 79 144;
+  --color-primary-light: 26 115 197;
+  --color-primary-dark: 0 61 112;
+  --color-accent: 0 201 255;
   --color-bg-dark: #0d1b2b;
   --color-bg-surface: #1c2a3a;
   --color-bg-light: #f5f8fb;

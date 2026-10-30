@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SKILL_CATEGORIES } from "@/lib/constants";
 import { motion } from "framer-motion";
 import { usePrefersReducedMotion } from "@/lib/hooks";
-import { useI18n } from "@/lib/i18n";
+import { pick, useI18n } from "@/lib/i18n";
 
 export function Skills() {
   const reducedMotion = usePrefersReducedMotion();
@@ -18,6 +18,13 @@ export function Skills() {
     "DevOps & Tools": "DevOps et Outils",
     Testing: "Tests",
     Collaboration: "Collaboration",
+  };
+
+  const categoryTitleDe: Record<string, string> = {
+    Architecture: "Architektur",
+    "DevOps & Tools": "DevOps & Tools",
+    Testing: "Testing",
+    Collaboration: "Zusammenarbeit",
   };
 
   return (
@@ -46,7 +53,7 @@ export function Skills() {
               className="rounded-2xl border border-white/10 bg-bg-surface/60 p-6 backdrop-blur transition-colors hover:border-accent/30"
             >
               <h3 className="font-sora text-lg font-semibold text-white">
-                {locale === "fr" ? categoryTitleFr[category.title] ?? category.title : category.title}
+                {pick<string>(locale, category.title, categoryTitleFr[category.title], categoryTitleDe[category.title])}
               </h3>
               <ul className="mt-4 flex flex-wrap gap-2" role="list">
                 {category.skills.map((skill) => (

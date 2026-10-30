@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Hamza Mlaouhi",
   title: "Senior Mobile Engineer",
-  location: "Tunis, Tunisia",
+  location: "Essen, North Rhine-Westphalia, Germany",
   email: "hamza0mlaouhi@gmail.com",
   phone: "+216 24 878 978",
   linkedin: "https://www.linkedin.com/in/hamza-mlaouhi-37b2a01b5/",
@@ -207,4 +207,5 @@ export const LANGUAGES = [
   { name: "Arabic", level: "Native" },
   { name: "English", level: "Advanced (B2)" },
   { name: "French", level: "Intermediate (B1)" },
+  { name: "German", level: "Elementary (A2)" },
 ] as const;

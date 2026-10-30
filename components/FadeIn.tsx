@@ -5,11 +5,12 @@ import { usePrefersReducedMotion } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 export const fadeUpVariants: Variants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 40, rotateX: 18, transformPerspective: 1000 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    rotateX: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -47,11 +48,12 @@ export function FadeIn({
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={{
-        hidden: { opacity: 0, y: 32 },
+        hidden: { opacity: 0, y: 40, rotateX: 18, transformPerspective: 1000 },
         visible: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] },
+          rotateX: 0,
+          transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
         },
       }}
       className={cn(className)}

@@ -2,7 +2,14 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-export type Locale = "en" | "fr";
+export type Locale = "en" | "fr" | "de";
+
+export const LOCALES: Locale[] = ["en", "fr", "de"];
+
+/** Localized value with English fallback. */
+export function pick<T>(locale: Locale, en: T, fr?: T, de?: T): T {
+  return (locale === "fr" ? fr : locale === "de" ? de : undefined) ?? en;
+}
 
 type Translation = {
   nav: {
@@ -47,6 +54,8 @@ type Translation = {
     workflow: string;
     enterprise: string;
     privateDeployment: string;
+    readMore: string;
+    showLess: string;
   };
   experience: {
     eyebrow: string;
@@ -87,7 +96,7 @@ const translations: Record<Locale, Translation> = {
       experience: "Experience",
       education: "Education",
       contact: "Contact",
-      hireMe: "Hire Me",
+      hireMe: "You Can Reach Me",
       language: "Language",
     },
     hero: {
@@ -119,13 +128,15 @@ const translations: Record<Locale, Translation> = {
       eyebrow: "Selected Work",
       title: "Production mobile apps with verified live listings",
       subtitle:
-        "Featured launches and enterprise deployments across marketplace, cleantech, health, social, and culture.",
+        "Featured launches and enterprise deployments across marketplace, cleantech, edtech, health, social, and culture.",
       callout:
-        "A selection of 9 shipped applications across construction tech, cleantech, enterprise, healthcare, and culture. More available on request.",
+        "A selection of 11 shipped applications across construction tech, cleantech, edtech, e-commerce, enterprise, healthcare, and culture. More available on request.",
       letsTalk: "Let's Talk",
       workflow: "Workflow",
       enterprise: "Enterprise",
       privateDeployment: "Private Deployment",
+      readMore: "Read more",
+      showLess: "Show less",
     },
     experience: {
       eyebrow: "Experience",
@@ -167,7 +178,7 @@ const translations: Record<Locale, Translation> = {
       experience: "Experience",
       education: "Formation",
       contact: "Contact",
-      hireMe: "Me recruter",
+      hireMe: "Me joindre",
       language: "Langue",
     },
     hero: {
@@ -200,13 +211,15 @@ const translations: Record<Locale, Translation> = {
       eyebrow: "Projets selectionnes",
       title: "Applications mobiles en production",
       subtitle:
-        "Lancements publics et deploiements entreprise dans la marketplace, cleantech, sante, social et culture.",
+        "Lancements publics et deploiements entreprise dans la marketplace, cleantech, edtech, sante, social et culture.",
       callout:
-        "Une selection de 9 applications livrees en production dans la construction tech, la cleantech, l'entreprise, la sante et la culture. D'autres references sont disponibles sur demande.",
+        "Une selection de 11 applications livrees en production dans la construction tech, la cleantech, l'edtech, le e-commerce, l'entreprise, la sante et la culture. D'autres references sont disponibles sur demande.",
       letsTalk: "Discutons",
       workflow: "Organisation",
       enterprise: "Entreprise",
       privateDeployment: "Deploiement prive",
+      readMore: "Lire la suite",
+      showLess: "Reduire",
     },
     experience: {
       eyebrow: "Experience",
@@ -239,6 +252,89 @@ const translations: Record<Locale, Translation> = {
       portfolio: "Portfolio Ingenieur Mobile Senior",
     },
   },
+  de: {
+    nav: {
+      home: "Start",
+      about: "Über mich",
+      skills: "Fähigkeiten",
+      projects: "Projekte",
+      experience: "Erfahrung",
+      education: "Ausbildung",
+      contact: "Kontakt",
+      hireMe: "So erreichen Sie mich",
+      language: "Sprache",
+    },
+    hero: {
+      badge: "5+ Jahre Mobile-Entwicklung",
+      role: "Senior Mobile Engineer",
+      greeting: "Hallo, ich bin",
+      specializingIn: "Spezialisiert auf",
+      tagline:
+        "Ich entwickle skalierbare, performante Mobile-Apps mit Flutter und nativem Android/iOS bis zum Produktiv-Release im App Store und bei Google Play.",
+      viewMyWork: "Meine Projekte",
+      getInTouch: "Kontakt",
+      scroll: "Scrollen",
+    },
+    about: {
+      eyebrow: "Über mich",
+      title: "Mobile-Produkte von A bis Z",
+      subtitle:
+        "Von Architektur und APIs bis zum Release im App Store und Play Store.",
+      summary:
+        "Senior Mobile Engineer mit über 5 Jahren Erfahrung in der Entwicklung skalierbarer, performanter Mobile-Apps für Android und iOS. Experte für Cross-Platform-Entwicklung mit Flutter sowie native Entwicklung mit Kotlin, Java und Swift. Nachweisliche Erfahrung im Entwurf robuster Mobile-Architekturen, in der API-Integration und in der Auslieferung produktionsreifer Apps vom Konzept bis zum Store-Release. Fundierte Erfahrung mit CI/CD-Automatisierung, modernen Entwicklungsworkflows und KI-gestützten Engineering-Tools.",
+      languages: "Sprachen",
+    },
+    skills: {
+      eyebrow: "Fähigkeiten",
+      title: "Technisches Toolkit",
+      subtitle:
+        "Mobile-First-Engineering über Plattformen, Architektur, APIs und Delivery hinweg.",
+    },
+    projects: {
+      eyebrow: "Ausgewählte Projekte",
+      title: "Mobile-Apps im Produktivbetrieb",
+      subtitle:
+        "Öffentliche Launches und Enterprise-Deployments in Marketplace, CleanTech, EdTech, Gesundheit, Social und Kultur.",
+      callout:
+        "Eine Auswahl von 11 ausgelieferten Anwendungen aus Construction Tech, CleanTech, EdTech, E-Commerce, Enterprise, Gesundheit und Kultur. Weitere auf Anfrage.",
+      letsTalk: "Lass uns sprechen",
+      workflow: "Arbeitsweise",
+      enterprise: "Enterprise",
+      privateDeployment: "Privates Deployment",
+      readMore: "Mehr lesen",
+      showLess: "Weniger anzeigen",
+    },
+    experience: {
+      eyebrow: "Erfahrung",
+      title: "Wo ich gearbeitet habe",
+      subtitle:
+        "5+ Jahre bei Produktunternehmen, in der Automobilbranche und für Freelance-Kunden.",
+    },
+    education: {
+      eyebrow: "Ausbildung",
+      title: "Akademischer Werdegang",
+      subtitle:
+        "Informatik-Grundlagen mit Spezialisierung auf Mobile-Entwicklung.",
+    },
+    contact: {
+      eyebrow: "Kontakt",
+      title: "Lass uns etwas bauen",
+      subtitle:
+        "Offen für Senior-Mobile-Rollen, Beratung und spannende Produktarbeit.",
+      email: "E-Mail",
+      phone: "Telefon",
+      linkedin: "LinkedIn",
+      linkedinProfile: "LinkedIn-Profil",
+      location: "Standort",
+      sendEmail: "E-Mail senden",
+      downloadCvEn: "Lebenslauf herunterladen (EN)",
+      downloadCvFr: "Lebenslauf herunterladen (FR)",
+    },
+    footer: {
+      builtWith: "Erstellt mit Next.js.",
+      portfolio: "Portfolio Senior Mobile Engineer",
+    },
+  },
 };
 
 type I18nContextValue = {
@@ -254,8 +350,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = window.localStorage.getItem("locale");
-    if (saved === "en" || saved === "fr") {
-      setLocaleState(saved);
+    if (LOCALES.includes(saved as Locale)) {
+      setLocaleState(saved as Locale);
     }
   }, []);
 

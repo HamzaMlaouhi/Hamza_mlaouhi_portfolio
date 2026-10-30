@@ -11,11 +11,11 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "var(--color-primary)",
-          light: "var(--color-primary-light)",
-          dark: "var(--color-primary-dark)",
+          DEFAULT: "rgb(var(--color-primary) / <alpha-value>)",
+          light: "rgb(var(--color-primary-light) / <alpha-value>)",
+          dark: "rgb(var(--color-primary-dark) / <alpha-value>)",
         },
-        accent: "var(--color-accent)",
+        accent: "rgb(var(--color-accent) / <alpha-value>)",
         "bg-dark": "var(--color-bg-dark)",
         "bg-surface": "var(--color-bg-surface)",
         "bg-light": "var(--color-bg-light)",
@@ -38,11 +38,21 @@ const config: Config = {
       },
       animation: {
         float: "float 6s ease-in-out infinite",
+        build: "build 3.2s ease-in-out infinite",
+        "grid-flow": "grid-flow 2.4s linear infinite",
       },
       keyframes: {
         float: {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-16px)" },
+        },
+        build: {
+          "0%": { transform: "scaleX(0)" },
+          "70%, 100%": { transform: "scaleX(1)" },
+        },
+        "grid-flow": {
+          from: { backgroundPosition: "0 0" },
+          to: { backgroundPosition: "0 56px" },
         },
       },
     },
