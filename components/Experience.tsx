@@ -6,7 +6,7 @@ import { FadeIn, fadeUpVariants, staggerContainer } from "@/components/FadeIn";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { EXPERIENCE } from "@/lib/constants";
 import { usePrefersReducedMotion } from "@/lib/hooks";
-import { useI18n } from "@/lib/i18n";
+import { pick, useI18n } from "@/lib/i18n";
 
 export function Experience() {
   const reducedMotion = usePrefersReducedMotion();
@@ -67,6 +67,67 @@ export function Experience() {
     },
   };
 
+  const deContent: Record<string, { role: string; highlights: string[] }> = {
+    MawadOnline: {
+      role: "Senior Mobile Engineer",
+      highlights: [
+        "Echtzeit-In-App-Chat mit Firebase entwickelt, mit geschätzt 25% mehr Nutzerengagement.",
+        "Mehrere Payment-Gateways für reibungslose E-Commerce-Transaktionen integriert.",
+        "App-Bundle-Größe durch Code-Deduplizierung und DRY-Prinzipien um ca. 20% reduziert.",
+        "Offline-First-Architektur mit SQLite und connectivity_plus umgesetzt.",
+        "Mehrsprachigkeit (i18n) und FCM-Push-Benachrichtigungen ausgeliefert.",
+        "App-Store- und Play-Store-Releases mit Fastlane-Pipelines per Einzelbefehl automatisiert.",
+      ],
+    },
+    Sofiatech: {
+      role: "Senior Mobile Engineer",
+      highlights: [
+        "Surtech-App mit Clean Architecture und BLoC-Pattern konzipiert.",
+        "REST-APIs mit robustem Error-Handling und Retry-Mechanismen integriert.",
+        "Microsoft Clarity für Heatmaps und UX-Reibungsanalysen eingesetzt.",
+        "Unit- und Widget-Tests mit Flutter test und Mockito geschrieben.",
+      ],
+    },
+    "LRT Automotive GmbH": {
+      role: "Mid-Senior Mobile Application Developer",
+      highlights: [
+        "GraphQL-APIs zur Echtzeitsteuerung von Wallbox-Ladestationen integriert.",
+        "Geolokalisierung für die Suche nach Ladestationen und kontextbezogene UX entwickelt.",
+        "Dynamische Netzwerkerkennung für Offline/Online-Übergänge entwickelt.",
+      ],
+    },
+    "Zahou-tech": {
+      role: "Mobile Engineer",
+      highlights: [
+        "4+ Flutter-Apps gewartet und optimiert, Absturzrate um ca. 30% gesenkt.",
+        "Geolokalisierung mit geolocator und Google Maps API umgesetzt.",
+        "CI/CD-Pipelines mit GitHub Actions für automatisierte Builds und Deployments aufgesetzt.",
+      ],
+    },
+    UTEEK: {
+      role: "Mobile-Entwickler",
+      highlights: [
+        "5+ Apps entwickelt und im App Store und bei Google Play veröffentlicht.",
+        "Firebase Authentication, Firestore und FCM integriert.",
+        "Performance mit Flutter DevTools analysiert und Speicher- sowie Rendering-Probleme behoben.",
+      ],
+    },
+    Freelancer: {
+      role: "Mobile-Entwickler",
+      highlights: [
+        "Diyafa, OOUC und Nurtify entwickelt, alle bei Google Play veröffentlicht.",
+        "Bowling-Apps von Java nach Kotlin mit Coroutines und Flows migriert.",
+        "Vivencia entwickelt, eine KI-Kosmetik-App mit Gesichtserkennung via TensorFlow Lite.",
+      ],
+    },
+  };
+
+  const toGermanPeriod = (period: string) =>
+    period
+      .replace("Present", "Heute")
+      .replace("May", "Mai")
+      .replace("Dec", "Dez");
+
   const toFrenchPeriod = (period: string) =>
     period
       .replace("Sep", "Sept")
@@ -122,25 +183,27 @@ export function Experience() {
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <div>
                     <h3 className="font-sora text-xl font-semibold text-white">
-                      {locale === "fr" ? frContent[job.company]?.role ?? job.role : job.role}
+                      {pick<string>(locale, job.role, frContent[job.company]?.role, deContent[job.company]?.role)}
                     </h3>
                     <p className="mt-1 font-mono text-sm text-accent">
                       {job.company}
                     </p>
                   </div>
                   <p className="font-mono text-xs text-text-muted">
-                    {locale === "fr" ? toFrenchPeriod(job.period) : job.period}
+                    {pick(locale, job.period, toFrenchPeriod(job.period), toGermanPeriod(job.period))}
                     <span className="mx-2 text-white/20">·</span>
-                    {locale === "fr" && job.location === "Tunis, Tunisia"
-                      ? "Tunis, Tunisie"
+                    {job.location === "Tunis, Tunisia"
+                      ? pick(locale, job.location, "Tunis, Tunisie", "Tunis, Tunesien")
                       : job.location}
                   </p>
                 </div>
 
                 <ul className="mt-4 space-y-2" role="list">
-                  {(locale === "fr"
-                    ? frContent[job.company]?.highlights ?? job.highlights
-                    : job.highlights
+                  {pick<readonly string[]>(
+                    locale,
+                    job.highlights,
+                    frContent[job.company]?.highlights,
+                    deContent[job.company]?.highlights
                   ).map((item) => (
                     <li
                       key={item}

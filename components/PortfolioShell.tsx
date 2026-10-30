@@ -15,7 +15,7 @@ export function PortfolioShell() {
   return (
     <LanguageProvider>
       <Navigation />
-      <main>
+      <main className="overflow-x-clip">
         <Hero />
         <About />
         <Skills />

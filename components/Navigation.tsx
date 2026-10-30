@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { SITE } from "@/lib/constants";
 import { useActiveSection, useScrolled } from "@/lib/hooks";
 import { Button } from "@/components/ui/button";
-import { useI18n } from "@/lib/i18n";
+import { LOCALES, useI18n } from "@/lib/i18n";
 import {
   Sheet,
   SheetContent,
@@ -25,6 +25,8 @@ const NAV_LINK_HREFS = [
   "#education",
   "#contact",
 ] as const;
+
+const LOCALE_NAMES = { en: "English", fr: "Francais", de: "Deutsch" } as const;
 
 const SECTION_IDS = NAV_LINK_HREFS.map((href) => href.replace("#", ""));
 
@@ -64,7 +66,7 @@ export function Navigation() {
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden items-center gap-1 md:flex" role="list">
+        <ul className="hidden items-center gap-1 lg:flex" role="list">
           {navLinks.map((link) => {
             const id = link.href.replace("#", "");
             const isActive = active === id;
@@ -94,34 +96,24 @@ export function Navigation() {
           })}
         </ul>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <div className="rounded-full border border-white/15 bg-white/5 p-1">
-            <button
-              type="button"
-              onClick={() => setLocale("en")}
-              className={cn(
-                "rounded-full px-2 py-1 font-mono text-[10px] transition-colors",
-                locale === "en"
-                  ? "bg-white/20 text-white"
-                  : "text-text-muted hover:text-white"
-              )}
-              aria-label={`${t.nav.language}: English`}
-            >
-              EN
-            </button>
-            <button
-              type="button"
-              onClick={() => setLocale("fr")}
-              className={cn(
-                "rounded-full px-2 py-1 font-mono text-[10px] transition-colors",
-                locale === "fr"
-                  ? "bg-white/20 text-white"
-                  : "text-text-muted hover:text-white"
-              )}
-              aria-label={`${t.nav.language}: Francais`}
-            >
-              FR
-            </button>
+            {LOCALES.map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setLocale(code)}
+                className={cn(
+                  "rounded-full px-2 py-1 font-mono text-[10px] transition-colors",
+                  locale === code
+                    ? "bg-white/20 text-white"
+                    : "text-text-muted hover:text-white"
+                )}
+                aria-label={`${t.nav.language}: ${LOCALE_NAMES[code]}`}
+              >
+                {code.toUpperCase()}
+              </button>
+            ))}
           </div>
           <motion.div>
             <Button asChild size="sm">
@@ -135,7 +127,7 @@ export function Navigation() {
           <SheetTrigger asChild>
             <button
               type="button"
-              className="rounded-lg p-2 text-white md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="rounded-lg p-2 text-white lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               aria-label="Open navigation menu"
             >
               <Menu className="h-6 w-6" />
@@ -147,30 +139,22 @@ export function Navigation() {
                 {SITE.name}
               </p>
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setLocale("en")}
-                  className={cn(
-                    "rounded-full border border-white/20 px-3 py-1.5 font-mono text-xs transition-colors",
-                    locale === "en"
-                      ? "bg-white/20 text-white"
-                      : "text-text-muted hover:text-white"
-                  )}
-                >
-                  EN
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLocale("fr")}
-                  className={cn(
-                    "rounded-full border border-white/20 px-3 py-1.5 font-mono text-xs transition-colors",
-                    locale === "fr"
-                      ? "bg-white/20 text-white"
-                      : "text-text-muted hover:text-white"
-                  )}
-                >
-                  FR
-                </button>
+                {LOCALES.map((code) => (
+                  <button
+                    key={code}
+                    type="button"
+                    onClick={() => setLocale(code)}
+                    className={cn(
+                      "rounded-full border border-white/20 px-3 py-1.5 font-mono text-xs transition-colors",
+                      locale === code
+                        ? "bg-white/20 text-white"
+                        : "text-text-muted hover:text-white"
+                    )}
+                    aria-label={`${t.nav.language}: ${LOCALE_NAMES[code]}`}
+                  >
+                    {code.toUpperCase()}
+                  </button>
+                ))}
               </div>
               <ul className="flex flex-col gap-2" role="list">
                 {navLinks.map((link, i) => (

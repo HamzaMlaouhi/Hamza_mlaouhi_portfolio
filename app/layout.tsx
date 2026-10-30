@@ -27,7 +27,8 @@ export const metadata: Metadata = {
     "Kotlin",
     "iOS",
     "Android",
-    "Tunisia",
+    "Germany",
+    "Essen",
   ],
   authors: [{ name: "Hamza Mlaouhi" }],
   openGraph: {

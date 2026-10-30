@@ -13,12 +13,13 @@ export function SectionHeading({
   title,
   subtitle,
   className,
-  dark = false,
+  dark = true,
 }: SectionHeadingProps) {
   return (
     <div className={cn("mb-12 max-w-2xl", className)}>
       {eyebrow && (
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-primary">
+        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-accent">
+          <span className="text-white/30">{"// "}</span>
           {eyebrow}
         </p>
       )}
